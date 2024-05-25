@@ -1,7 +1,7 @@
 import React from "react";
 import { Suspense } from "react";
 import Loading from "../../../assets/Loading.svg";
-const SuspenseFallback = ({ children }: { children: React.ReactNode }) => {
+const SuspenseFallback = ({ children }: { children?: React.ReactNode }) => {
   return (
     <Suspense
       fallback={
