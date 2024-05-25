@@ -25,7 +25,7 @@
   align-items: flex-end;
 }
 .clients .swiper-pagination-bullet-active {
-  top: -2px;
+  top: 0;
 }
 .clients .swiper-button-next:after,
 .swiper-button-prev::after {

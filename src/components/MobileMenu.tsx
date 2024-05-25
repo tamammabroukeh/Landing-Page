@@ -17,7 +17,7 @@ const MobileMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IMenuState) => {
           <p></p>
           <button
             type="button"
-            className="-m-2.5 rounded-md p-2.5 text-gray-700"
+            className="rounded-md transition ease-out delay-150 duration-300 text-gray-700"
             onClick={() => setMobileMenuOpen(false)}
           >
             <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -27,13 +27,13 @@ const MobileMenu = ({ mobileMenuOpen, setMobileMenuOpen }: IMenuState) => {
           <div className="-my-6 divide-y flex justify-between items-center bg-gray-800 divide-gray-900/10">
             <div className="py-3">
               <NavbarLinks
-                classes=" block mx-3  rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-50"
+                classes=" block mx-3  rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-gray-50 hover:text-gray-800"
                 links={Links}
               />
             </div>
             <div className="">
               <NavbarLinks
-                classes="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white mx-3 hover:bg-gray-50"
+                classes="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white mx-3 hover:bg-gray-50 hover:text-gray-800"
                 links={authLinks}
               />
             </div>

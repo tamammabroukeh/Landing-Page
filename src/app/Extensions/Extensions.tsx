@@ -7,7 +7,7 @@ const content = `Tailor your website to fit your brand with our intuitive
 const Extensions = () => {
   return (
     <div className="bg-gray-200 px-10 py-10 md:py-20">
-      <div className="md:max-w-7xl lg:px-20 mx-auto flex justify-around items-center flex-wrap-reverse md:gap-20">
+      <div className="md:max-w-7xl lg:px-20 mx-auto flex justify-around items-center flex-wrap-reverse md:flex-nowrap md:gap-20">
         <AnimateDiv>
           <Image
             ImageURL={ExtensionsImg}

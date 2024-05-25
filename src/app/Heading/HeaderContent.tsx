@@ -1,21 +1,17 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import Button from "../../ui/Button";
+import AnimateDiv from "../../components/AnimateDiv";
 const HeaderContent = () => {
   return (
     <div className="my-10 absolute translate-y-20 md:translate-y-32 w-full">
       <div className="mx-auto px-6 xl:px-24 flex flex-col md:flex-row justify-start items-center xl:gap-40">
-        <motion.div
-          initial={{ x: "100%", opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-        >
+        <AnimateDiv>
           <h2 className="text-3xl md:text-6xl font-semibold space-y-5 text-gray-600 xl:text-gray-900 text-center">
             <p>The Leader</p>
             <p>In Website</p>
             <p className="text-gray-400">World</p>
           </h2>
-        </motion.div>
+        </AnimateDiv>
         <div className="border-8 border-white rounded-md hidden xl:block ">
           <nav className="flex  flex-wrap p-3 gap-14 text-gray-900 justify-around items-center bg-white">
             <div className="font-semibold text-lg ">Journey</div>

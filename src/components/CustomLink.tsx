@@ -5,7 +5,7 @@ const CustomLink = ({ id, title, to, classes }: ILink) => {
     <Link
       key={id}
       to={to}
-      className={`${classes} bg-transparent transition ease-in-out delay-150 duration-300`}
+      className={`${classes} transition ease-in-out delay-150 duration-300`}
     >
       {title}
     </Link>

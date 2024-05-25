@@ -10,7 +10,7 @@ const GenerateContentSection = () => {
       <div className="my-20 text-center md:text-start w-full md:ml-10 lg:mx-24 space-y-8 transition-">
         <HeadingTwo
           title="Generate Content Instantly"
-          classes="md:text-4xl animate-bounce md:w-[80%] lg:text-5xl leading-tight text-slate-900 font-semibold"
+          classes="text-2xl md:text-4xl animate-bounce md:w-[80%] lg:text-5xl leading-tight text-slate-900 font-semibold"
         />
         <Paragraph classes="text-gray-800 md:w-[70%]" title={content} />
         <div>

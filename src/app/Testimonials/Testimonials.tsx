@@ -21,6 +21,7 @@ export default function Testimonials() {
             width: "100%",
             height: "400px",
             padding: "70px 50px",
+            margin: "5px 0",
           }}
           pagination={{
             dynamicBullets: true,
