@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+.clients .swiper-button-prev,
+.swiper-button-next {
+  top: 95% !important;
+}
+.clients .swiper-button-prev {
+  left: 25%;
+}
+.clients .swiper-button-next {
+  left: 75%;
+}
+.clients .swiper-slide-active .card {
+  padding-top: 75px;
+}
+.clients .swiper-wrapper {
+  display: flex;
+  align-items: flex-end;
+}
+.clients .swiper-pagination-bullet-active {
+  top: -2px;
+}
+.clients .swiper-button-next:after,
+.swiper-button-prev::after {
+  font-size: 25px !important;
+  background-color: darkcyan;
+  padding: 7px 15px;
+  color: white;
+  border-radius: 50%;
+}
+.clients .swiper-pagination-bullet {
+  width: 20px !important;
+  height: 20px !important;
+}
+.clients .swiper-pagination-bullet-active-main {
+  background: darkcyan !important ;
+}
