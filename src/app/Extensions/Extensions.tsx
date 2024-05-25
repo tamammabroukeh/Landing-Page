@@ -6,13 +6,13 @@ const content = `Tailor your website to fit your brand with our intuitive
             clicks`;
 const Extensions = () => {
   return (
-    <div className="bg-gray-200 px-10 py-20">
-      <div className="max-w-7xl lg:px-20 mx-auto flex justify-around items-center gap-20">
+    <div className="bg-gray-200 px-10 py-10 md:py-20">
+      <div className="md:max-w-7xl lg:px-20 mx-auto flex justify-around items-center flex-wrap-reverse md:gap-20">
         <AnimateDiv>
           <Image
             ImageURL={ExtensionsImg}
             altText="Extensions img"
-            classes="w-full h-full"
+            classes="w-full h-full mt-6"
           />
         </AnimateDiv>
         <div className="space-y-7">

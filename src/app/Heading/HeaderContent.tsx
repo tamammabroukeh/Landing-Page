@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Button from "../../ui/Button";
 const HeaderContent = () => {
   return (
-    <div className="my-10 absolute translate-y-20 md:translate-y-32 xl:translate-y-44 w-full">
+    <div className="my-10 absolute translate-y-20 md:translate-y-32 w-full">
       <div className="mx-auto px-6 xl:px-24 flex flex-col md:flex-row justify-start items-center xl:gap-40">
         <motion.div
           initial={{ x: "100%", opacity: 0 }}
