@@ -6,9 +6,9 @@ import {
 } from "../interfaces/Interfaces";
 import { v4 as uuid } from "uuid";
 import { AlignEndVertical } from "lucide-react";
-import David from "../assets/David.jpg";
-import John from "../assets/John Doe.jpg";
-import Jane from "../assets/Jane.jpg";
+import David from "../../public/assets/David.jpg";
+import John from "../../public/assets/John Doe.jpg";
+import Jane from "../../public/assets/Jane.jpg";
 export const Links: ILink[] = [
   { id: uuid(), to: "/", title: "Home" },
   { id: uuid(), to: "/theme", title: "Theme" },

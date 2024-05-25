@@ -1,4 +1,4 @@
-import ExtensionsImg from "../../assets/Extensions.jpg";
+import ExtensionsImg from "../../../public/assets/Extensions.jpg";
 import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
 import AnimateDiv from "../../components/AnimateDiv";
 const content = `Tailor your website to fit your brand with our intuitive

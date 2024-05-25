@@ -1,4 +1,4 @@
-import GenerateImg from "../../assets/Generate.jpg";
+import GenerateImg from "../../../public/assets/Generate.jpg";
 import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
 import AnimateDiv from "../../components/AnimateDiv";
 const content = `Save time with AI-generated content that’s tailored to your audience.

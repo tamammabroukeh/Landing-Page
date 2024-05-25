@@ -1,4 +1,4 @@
-import EcommerceImg from "../../assets/Ecommerce.jpg";
+import EcommerceImg from "../../../public/assets/Ecommerce.jpg";
 import { CustomLink, HeadingTwo, Image } from "../../components";
 import AnimateDiv from "../../components/AnimateDiv";
 import Paragraph from "../../components/Paragraph";

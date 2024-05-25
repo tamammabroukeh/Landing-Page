@@ -3,7 +3,7 @@ import { Popover } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { Links, authLinks } from "../../data/data";
 import { CustomLink, NavbarLinks, MobileMenu, Image } from "../../components";
-import HeaderImage from "../../assets/landing page.jpg";
+import HeaderImage from "../../../public/assets/landing page.jpg";
 import HeaderContent from "./HeaderContent";
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

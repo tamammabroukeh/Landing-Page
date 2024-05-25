@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./styles.css";
 import { Autoplay, EffectFlip, Pagination, Navigation } from "swiper/modules";
-import BloggingImg from "../../assets/Blogging.jpg";
+import BloggingImg from "../../../public/assets/Blogging.jpg";
 import { BloggingContent } from "../../data/data";
 import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
 import AnimateDiv from "../../components/AnimateDiv";

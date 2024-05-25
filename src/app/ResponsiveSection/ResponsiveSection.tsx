@@ -1,4 +1,4 @@
-import Responsive from "../../assets/Responsive.jpg";
+import Responsive from "../../../public/assets/Responsive.jpg";
 import { HeadingTwo, Image, Paragraph } from "../../components";
 import AnimateDiv from "../../components/AnimateDiv";
 const description = `Ensure your website looks amazing on any device. Our AI optimizes
