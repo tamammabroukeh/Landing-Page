@@ -11,16 +11,6 @@ import BloggingImg from "../../../public/assets/Blogging.jpg";
 import { BloggingContent } from "../../data/data";
 import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
 import AnimateDiv from "../../components/AnimateDiv";
-// const settings = {
-//   autoplay: true,
-//   autoplaySpeed: 3000,
-//   arrows: false,
-//   dots: true,
-//   infinite: true,
-//   speed: 500,
-//   slidesToShow: 1,
-//   slidesToScroll: 1,
-// };
 const Blogging = () => {
   // function to render a blogs
   const renderBlogs = () => {
