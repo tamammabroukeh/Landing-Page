@@ -1,5 +1,5 @@
 import Portfolio1 from "../../assets/Landing_Portfolio1.jpg";
-import Portfolio2 from "../../assets/Landing_Portfolio2.png";
+import Portfolio2 from "../../assets/Landing_Portfolio2.jpg";
 import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
 import AnimateDiv from "../../components/AnimateDiv";
 const description = `Showcase your creativity with this stylish portfolio theme. Ideal for
