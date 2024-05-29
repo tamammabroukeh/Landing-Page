@@ -8,7 +8,7 @@ const Explore = () => {
       const scrollPosition = window.scrollY;
       const section = document.getElementById("animatediv");
       if (section) {
-        const sectionTop = section.offsetTop;
+        // const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
         const windowHeight = window.innerHeight;
         if (scrollPosition > windowHeight + sectionHeight / 2) {

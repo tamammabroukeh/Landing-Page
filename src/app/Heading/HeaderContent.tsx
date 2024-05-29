@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
-import AnimateDiv from "../../components/AnimateDiv";
+// import AnimateDiv from "../../components/AnimateDiv";
 import { motion } from "framer-motion";
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 0.4,
-    transition: {
-      staggerChildren: 0.3,
-      delayChildren: 15,
-      duration: 0.5,
-    },
-  },
-};
+// const container = {
+//   hidden: { opacity: 0 },
+//   show: {
+//     opacity: 0.4,
+//     transition: {
+//       staggerChildren: 0.3,
+//       delayChildren: 15,
+//       duration: 0.5,
+//     },
+//   },
+// };
 const item = {
   hidden: { opacity: 0.4, y: 100 },
   show: {

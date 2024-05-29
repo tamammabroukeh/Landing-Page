@@ -10,7 +10,7 @@ import { Autoplay, EffectFlip, Pagination, Navigation } from "swiper/modules";
 import BloggingImg from "../../../public/assets/Blogging.jpg";
 import { BloggingContent } from "../../data/data";
 import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
-import AnimateDiv from "../../components/AnimateDiv";
+// import AnimateDiv from "../../components/AnimateDiv";
 // const container = {
 //   hidden: { opacity: 0 },
 //   show: {
