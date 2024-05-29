@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="space-y-5 mx-auto md:px-20 my-8">
         <div className="flex text-white py-3 px-3 md:px-5 justify-between items-center">
           <Paragraph
-            classes="text-lg  animate-bounce md:text-2xl lg:text-4xl font-semibold"
+            classes="text-lg md:text-2xl lg:text-4xl font-semibold"
             title="Ready to Take your next step ?"
           />
           <CustomLink

@@ -13,7 +13,7 @@ export default function Testimonials() {
   return (
     <div className="bg-slate-200">
       <div className="flex  flex-col gap-9 my-9 px-6 md:px:24 ">
-        <div className="text-4xl font-bold  animate-bounce text-center text-balance text-gray-800">
+        <div className="text-4xl font-bold text-center text-balance text-gray-800">
           What our Clients Says About us
         </div>
         <Swiper

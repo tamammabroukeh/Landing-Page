@@ -1,17 +1,46 @@
 import { Link } from "react-router-dom";
 import Button from "../../ui/Button";
 import AnimateDiv from "../../components/AnimateDiv";
+import { motion } from "framer-motion";
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 0.4,
+    transition: {
+      staggerChildren: 0.3,
+      delayChildren: 15,
+      duration: 0.5,
+    },
+  },
+};
+const item = {
+  hidden: { opacity: 0.4, y: 100 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.3,
+      delayChildren: 1.5,
+      duration: 1,
+    },
+  },
+};
 const HeaderContent = () => {
   return (
     <div className="my-10 absolute translate-y-20 md:translate-y-32 w-full">
-      <div className="mx-auto px-6 xl:px-24 flex flex-col md:flex-row justify-start items-center xl:gap-40">
-        <AnimateDiv>
-          <h2 className="text-3xl md:text-6xl font-semibold space-y-5 text-gray-600 xl:text-gray-900 text-center">
-            <p>The Leader</p>
-            <p>In Website</p>
-            <p className="text-gray-400">World</p>
-          </h2>
-        </AnimateDiv>
+      <motion.div
+        variants={item}
+        initial="hidden"
+        animate="show"
+        className="mx-auto px-6 xl:px-24 flex flex-col md:flex-row justify-start items-center xl:gap-40"
+      >
+        {/* <motion.div variants={item} initial="hidden" animate="show"> */}
+        <h2 className="text-3xl md:text-6xl font-semibold space-y-5 text-gray-600 xl:text-gray-900 text-center">
+          <p>The Leader</p>
+          <p>In Website</p>
+          <p className="text-gray-400">World</p>
+        </h2>
+        {/* </motion.div> */}
         <div className="border-8 border-white rounded-md hidden xl:block ">
           <nav className="flex  flex-wrap p-3 gap-14 text-gray-900 justify-around items-center bg-white">
             <div className="font-semibold text-lg ">Journey</div>
@@ -45,33 +74,8 @@ const HeaderContent = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
-
 export default HeaderContent;
-
-{
-  /* <header className="absolute bg-white w-full">
-  <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-    <div className="flex lg:flex-1">
-      <NavbarLink title="journey" to="/" classes="-m-1.5 p-1.5 text-2xl" />
-    </div>
-    <Popover.Group className="hidden lg:flex lg:gap-x-6">
-      <NavbarLinks
-        classes={
-          "text-lg font-semibold rounded-xl hover:bg-gray-900 hover:text-white px-5 py-3 leading-6 text-gray-900"
-        }
-        links={ContentLinks}
-      />
-    </Popover.Group>
-    <div className="hidden lg:flex space-x-2 lg:flex-1 lg:justify-end">
-      <NavbarLinks
-        links={authLinks}
-        classes="text-xl hover:bg-slate-100 px-10 rounded-2xl py-3 font-semibold leading-6 text-gray-900"
-      />
-    </div>
-  </nav>
-</header>; */
-}

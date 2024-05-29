@@ -9,7 +9,7 @@ const Ecommerce = () => {
   return (
     <div className="flex flex-wrap md:flex-nowrap">
       <div className="bg-neutral-900 p-8 md:px-0 space-y-3 md:space-y-5 lg:space-y-8 text-white flex flex-col max-w-7xl mx-auto justify-center items-start md:pl-10 lg:px-20">
-        <HeadingTwo classes="text-3xl animate-bounce md:text-5xl lg:text-6xl font-semibold leading-tight">
+        <HeadingTwo classes="text-3xl md:text-5xl lg:text-6xl font-semibold leading-tight">
           E-commerce <br />
           Master
         </HeadingTwo>
