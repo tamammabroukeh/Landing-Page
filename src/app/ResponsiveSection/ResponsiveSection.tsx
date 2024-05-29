@@ -13,10 +13,10 @@ const ResponsiveSection = () => {
       const scrollPosition = window.scrollY;
       const section = document.getElementById("animatediv");
       if (section) {
-        // const sectionTop = section.offsetTop;
+        const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
         const windowHeight = window.innerHeight;
-        if (scrollPosition > windowHeight + sectionHeight / 2) {
+        if (scrollPosition > sectionTop - windowHeight + sectionHeight / 2) {
           controls.start({ opacity: 1, x: 0 });
         } else {
           controls.start({ opacity: 0, x: -100 });
