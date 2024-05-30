@@ -26,7 +26,7 @@ const Ecommerce = () => {
 
     // Apply animation based on scroll progress
     controls.start({
-      x: `${yValue}%`, // Move from -100% to 0% as progress increases
+      y: `${yValue}%`, // Move from -100% to 0% as progress increases
       opacity: opacityValue, // Fade in as the section scrolls into view
     });
   }, [controls]);
@@ -43,7 +43,7 @@ const Ecommerce = () => {
       className="flex bg-neutral-900 flex-wrap md:flex-nowrap"
     >
       <motion.div
-        initial={{ x: "0", opacity: 0 }}
+        initial={{ y: 0, opacity: 0 }}
         animate={controls}
         transition={{ duration: 0.8 }}
         className=" section p-8 md:px-0 space-y-3 md:space-y-5 lg:space-y-8 text-white flex flex-col max-w-7xl mx-auto justify-center items-start md:pl-10 lg:px-20"

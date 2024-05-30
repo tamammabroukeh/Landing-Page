@@ -32,7 +32,7 @@ const Blogging = () => {
 
     // Apply animation based on scroll progress
     controls.start({
-      x: `${yValue}%`, // Move from -100% to 0% as progress increases
+      y: `${yValue}%`, // Move from -100% to 0% as progress increases
       opacity: opacityValue, // Fade in as the section scrolls into view
     });
   }, [controls]);
@@ -85,10 +85,9 @@ const Blogging = () => {
           Tools
         </HeadingTwo>
         <div className="flex flex-wrap md:flex-nowrap md:pl-10 items-center">
-          {/* <div className="section">{renderBlogs()}</div> */}
           <motion.div
             className="section"
-            initial={{ x: "0", opacity: 0 }}
+            initial={{ y: 0, opacity: 0 }}
             animate={controls}
             transition={{ duration: 1 }}
           >
