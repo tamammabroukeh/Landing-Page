@@ -10,56 +10,37 @@ import { Autoplay, EffectFlip, Pagination, Navigation } from "swiper/modules";
 import BloggingImg from "../../../public/assets/Blogging.jpg";
 import { BloggingContent } from "../../data/data";
 import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
-// import AnimateDiv from "../../components/AnimateDiv";
-// const container = {
-//   hidden: { opacity: 0 },
-//   show: {
-//     opacity: 1,
-//     transition: {
-//       staggerChildren: 1,
-//       delayChildren: 1.5,
-//       duration: 0.5,
-//     },
-//   },
-// };
-const container = {
-  hidden: { scale: 0 },
-  show: { scale: 1 },
-};
 import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const Blogging = () => {
+  const [scrollPosition, setScrollPosition] = useState(0);
   const controls = useAnimation();
 
+  const handleScroll = () => {
+    const position = window.scrollY;
+    setScrollPosition(position);
+  };
+
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const section = document.getElementById("animatediv");
-      if (section) {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const windowHeight = window.innerHeight;
-        if (scrollPosition > sectionTop - windowHeight + sectionHeight / 2) {
-          controls.start({ opacity: 1, x: 0 });
-        } else {
-          controls.start({ opacity: 0, x: 100 });
-        }
-      }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
+  }, []);
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [controls]);
+  useEffect(() => {
+    const footerSections = document.querySelectorAll<HTMLElement>(".section");
+    footerSections.forEach((section) => {
+      if (scrollPosition >= section.offsetTop - window.innerHeight * 0.8) {
+        controls.start({ x: 0, opacity: 1, transition: { duration: 1 } });
+      }
+    });
+  }, [scrollPosition, controls]);
 
   // function to render a blogs
   const renderBlogs = () => {
     return BloggingContent.map((item, index) => (
-      // <AnimateDiv>
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
+      <div
         className="mx-5 md:mx-0 mt-5 lg:mt-10 space-y-2 lg:space-y-5"
         key={item.id}
       >
@@ -74,8 +55,7 @@ const Blogging = () => {
         {index !== BloggingContent.length - 1 && (
           <div className="h-[1px] w-[90%] border-[1px] border-solid border-teal-400/55" />
         )}
-      </motion.div>
-      // </AnimateDiv>
+      </div>
     ));
   };
   // function to render img blogs
@@ -98,10 +78,14 @@ const Blogging = () => {
           Tools
         </HeadingTwo>
         <div className="flex flex-wrap md:flex-nowrap md:pl-10 items-center">
-          <div>{renderBlogs()}</div>
-          {/* <motion.div variants={container} initial="hidden" animate="show">
+          {/* <div className="section">{renderBlogs()}</div> */}
+          <motion.div
+            className="section"
+            animate={controls}
+            initial={{ x: 100, opacity: 0 }}
+          >
             {renderBlogs()}
-          </motion.div> */}
+          </motion.div>
           <Swiper
             spaceBetween={30}
             centeredSlides={true}

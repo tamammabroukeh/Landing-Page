@@ -42,7 +42,7 @@ const Theme = () => {
       }}
       className="text-center my-10 md:my-20"
     >
-      <h1 className="text-4xl md:text-6xl font-semibold text-slate-900">
+      <h1 className="text-3xl md:text-6xl font-semibold text-slate-900">
         Discover The Power of Ai
       </h1>
 

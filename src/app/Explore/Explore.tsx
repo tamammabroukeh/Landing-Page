@@ -1,38 +1,42 @@
 import { HeadingTwo } from "../../components";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const Explore = () => {
+  const [scrollPosition, setScrollPosition] = useState(0);
   const controls = useAnimation();
+
+  const handleScroll = () => {
+    const position = window.scrollY;
+    setScrollPosition(position);
+  };
+
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const section = document.getElementById("animatediv");
-      if (section) {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const windowHeight = window.innerHeight;
-        if (scrollPosition > sectionTop - windowHeight + sectionHeight / 2) {
-          controls.start({ opacity: 1, x: 0 });
-        } else {
-          controls.start({ opacity: 0, x: -100 });
-        }
-      }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
+  }, []);
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [controls]);
+  useEffect(() => {
+    const footerSections = document.querySelectorAll<HTMLElement>(".section");
+    footerSections.forEach((section) => {
+      if (scrollPosition >= section.offsetTop - window.innerHeight * 0.8) {
+        controls.start({ x: 0, opacity: 1, transition: { duration: 1 } });
+      }
+    });
+  }, [scrollPosition, controls]);
   return (
     <div className="text-center bg-gray-100 py-16">
       <motion.div
-        id="animatediv"
-        initial={{ opacity: 0, x: -100 }}
+        // id="animatediv"
+        // initial={{ opacity: 0, x: -100 }}
+        // animate={controls}
+        // transition={{
+        //   duration: 1,
+        //   ease: "easeOut",
+        // }}
+        initial={{ x: 100, opacity: 0 }}
         animate={controls}
-        transition={{
-          duration: 1,
-          ease: "easeOut",
-        }}
       >
         <HeadingTwo classes="text-5xl leading-snug font-semibold text-gray-900">
           Explore Our AI-Powered <br />

@@ -4,30 +4,54 @@ import { HeadingTwo, Image, Paragraph } from "../../components";
 const description = `Ensure your website looks amazing on any device. Our AI optimizes
             layouts to be fully responsive and mobile-friendly`;
 import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 const ResponsiveSection = () => {
+  // const controls = useAnimation();
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const scrollPosition = window.scrollY;
+  //     const section = document.getElementById("animatediv");
+  //     if (section) {
+  //       const sectionTop = section.offsetTop;
+  //       const sectionHeight = section.offsetHeight;
+  //       const windowHeight = window.innerHeight;
+  //       if (scrollPosition > sectionTop - windowHeight + sectionHeight / 2) {
+  //         controls.start({ opacity: 1, x: 0 });
+  //       } else {
+  //         controls.start({ opacity: 0, x: -100 });
+  //       }
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [controls]);
+
+  const [scrollPosition, setScrollPosition] = useState(0);
   const controls = useAnimation();
 
+  const handleScroll = () => {
+    const position = window.scrollY;
+    setScrollPosition(position);
+  };
+
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const section = document.getElementById("animatediv");
-      if (section) {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const windowHeight = window.innerHeight;
-        if (scrollPosition > sectionTop - windowHeight + sectionHeight / 2) {
-          controls.start({ opacity: 1, x: 0 });
-        } else {
-          controls.start({ opacity: 0, x: -100 });
-        }
-      }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
+  }, []);
 
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [controls]);
+  useEffect(() => {
+    const footerSections = document.querySelectorAll<HTMLElement>(".section");
+    footerSections.forEach((section) => {
+      if (scrollPosition >= section.offsetTop - window.innerHeight * 0.8) {
+        controls.start({ x: 0, opacity: 1, transition: { duration: 1 } });
+      }
+    });
+  }, [scrollPosition, controls]);
   const renderHeading = (arr: string[]) => {
     return arr.map((item, index) => (
       <HeadingTwo
@@ -40,16 +64,9 @@ const ResponsiveSection = () => {
   return (
     <div className="bg-teal-700/70 text-white text-center">
       <motion.div
-        id="animatediv"
-        initial={{ opacity: 0, x: -100 }}
+        initial={{ x: 100, opacity: 0 }}
         animate={controls}
-        transition={{
-          duration: 0.5,
-          ease: "easeOut",
-          delayChildren: 2,
-          staggerChildren: 0.8,
-        }}
-        className="my-10 relative text-center space-y-10"
+        className="my-10 section relative text-center space-y-10"
       >
         <div className="space-y-5">
           {renderHeading(["Seamless Accross", "All Devices"])}

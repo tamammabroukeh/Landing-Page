@@ -1,7 +1,33 @@
 import { FooterContent } from "../../data/data";
 import { CustomLink, Paragraph, HeadingTwo } from "../../components";
-import AnimateDiv from "../../components/AnimateDiv";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useState } from "react";
 const Footer = () => {
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const controls = useAnimation();
+
+  const handleScroll = () => {
+    const position = window.scrollY;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const footerSections =
+      document.querySelectorAll<HTMLElement>(".footer-section");
+    footerSections.forEach((section) => {
+      if (scrollPosition >= section.offsetTop - window.innerHeight * 0.8) {
+        controls.start({ x: 0, opacity: 1, transition: { duration: 1 } });
+      }
+    });
+  }, [scrollPosition, controls]);
+
   return (
     <div className="bg-neutral-900">
       <div className="space-y-5 mx-auto md:px-20 my-8">
@@ -20,14 +46,19 @@ const Footer = () => {
         <div className="flex justify-between flex-wrap mx-2 text-slate-300">
           {FooterContent.map((item) => {
             return (
-              <AnimateDiv key={item.id}>
+              <motion.div
+                className="footer-section"
+                initial={{ x: -100, opacity: 0 }}
+                animate={controls}
+                key={item.id}
+              >
                 <HeadingTwo classes="" title={item.parent} />
                 <ul className="list-disc mx-6 my-2">
                   {item.children.map((child, index) => {
                     return <li key={index}>{child}</li>;
                   })}
                 </ul>
-              </AnimateDiv>
+              </motion.div>
             );
           })}
         </div>
@@ -35,5 +66,4 @@ const Footer = () => {
     </div>
   );
 };
-
 export default Footer;
