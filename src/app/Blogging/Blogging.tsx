@@ -13,37 +13,6 @@ import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
 import { motion, useAnimation } from "framer-motion";
 import { useCallback, useEffect, useRef } from "react";
 const Blogging = () => {
-  // const sectionRef = useRef<HTMLDivElement>(null);
-  // const controls = useAnimation();
-  // const handleScroll = useCallback(() => {
-  //   const scrollPosition = window.scrollY + window.innerHeight;
-  //   const sectionPosition = sectionRef.current?.offsetTop || 0;
-  //   const sectionHeight = sectionRef.current?.offsetHeight || 0;
-
-  //   // Calculate the progress of scroll reveal animation
-  //   let progress = 0;
-  //   if (scrollPosition > sectionPosition) {
-  //     progress = (scrollPosition - sectionPosition) / sectionHeight;
-  //   }
-
-  //   // Ensure animation stays within bounds
-  //   const yValue = Math.min(0, -100 + 100 * progress);
-  //   const opacityValue = Math.min(1, progress);
-
-  //   // Apply animation based on scroll progress
-  //   controls.start({
-  //     y: `${yValue}%`, // Move from -100% to 0% as progress increases
-  //     opacity: opacityValue, // Fade in as the section scrolls into view
-  //   });
-  // }, [controls]);
-  // //Attach scroll event listener
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [handleScroll]);
-
   const sectionRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
   const handleScroll = useCallback(() => {
@@ -86,9 +55,12 @@ const Blogging = () => {
   // function to render a blogs
   const renderBlogs = () => {
     return BloggingContent.map((item, index) => (
-      <div
+      <motion.div
         className="mx-5 md:mx-0 mt-5 lg:mt-10 space-y-2 lg:space-y-5"
         key={item.id}
+        initial={{ y: 0, opacity: 0 }}
+        animate={controls}
+        transition={{ duration: 1 }}
       >
         <HeadingTwo
           classes="md:text-2xl text-3xl font-semibold text-gray-900"
@@ -101,7 +73,7 @@ const Blogging = () => {
         {index !== BloggingContent.length - 1 && (
           <div className="h-[1px] w-[90%] border-[1px] border-solid border-teal-400/55" />
         )}
-      </div>
+      </motion.div>
     ));
   };
   // function to render img blogs
@@ -124,14 +96,7 @@ const Blogging = () => {
           Tools
         </HeadingTwo>
         <div className="flex flex-wrap md:flex-nowrap md:pl-10 items-center">
-          <motion.div
-            className="section"
-            initial={{ y: 0, opacity: 0 }}
-            animate={controls}
-            transition={{ duration: 1 }}
-          >
-            {renderBlogs()}
-          </motion.div>
+          <div>{renderBlogs()}</div>
           <Swiper
             spaceBetween={30}
             centeredSlides={true}
