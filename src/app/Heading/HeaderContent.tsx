@@ -22,13 +22,11 @@ const HeaderContent = () => {
         animate="show"
         className="mx-auto px-6 xl:px-24 flex flex-col md:flex-row justify-start items-center xl:gap-40"
       >
-        {/* <motion.div variants={item} initial="hidden" animate="show"> */}
         <h2 className="text-3xl md:text-6xl font-semibold space-y-5 text-gray-600 xl:text-gray-900 text-center">
           <p>The Leader</p>
           <p>In Website</p>
           <p className="text-gray-400">World</p>
         </h2>
-        {/* </motion.div> */}
         <div className="border-8 border-white rounded-md hidden xl:block ">
           <nav className="flex  flex-wrap p-3 gap-14 text-gray-900 justify-around items-center bg-white">
             <div className="font-semibold text-lg ">Journey</div>
