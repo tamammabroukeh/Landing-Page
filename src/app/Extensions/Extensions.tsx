@@ -44,17 +44,13 @@ const Extensions = () => {
         ref={sectionRef}
         className="lg:px-20 mx-auto flex justify-around items-center flex-wrap-reverse md:flex-nowrap md:gap-20"
       >
-        <motion.div
-          initial={{ x: 0, opacity: 0 }}
-          animate={controls}
-          transition={{ duration: 1 }}
-        >
+        <div>
           <Image
             ImageURL={ExtensionsImg}
             altText="Extensions img"
             classes="w-full h-full mt-6"
           />
-        </motion.div>
+        </div>
         <motion.div
           initial={{ x: 0, opacity: 0 }}
           animate={controls}
