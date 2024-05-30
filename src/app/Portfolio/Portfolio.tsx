@@ -4,40 +4,44 @@ import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
 const description = `Showcase your creativity with this stylish portfolio theme. Ideal for
           artists, designers, and photographers`;
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 const Portfolio = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const sectionPosition = sectionRef.current?.offsetTop || 0;
+    const sectionHeight = sectionRef.current?.offsetHeight || 0;
 
-  const handleScroll = () => {
-    const position = window.scrollY;
-    setScrollPosition(position);
-  };
+    // Calculate the progress of scroll reveal animation
+    let progress = 0;
+    if (scrollPosition > sectionPosition) {
+      progress = (scrollPosition - sectionPosition) / sectionHeight;
+    }
 
+    // Ensure animation stays within bounds
+    const yValue = Math.min(0, -100 + 100 * progress);
+    const opacityValue = Math.min(1, progress);
+
+    // Apply animation based on scroll progress
+    controls.start({
+      y: `${yValue}%`, // Move from -100% to 0% as progress increases
+      opacity: opacityValue, // Fade in as the section scrolls into view
+    });
+  }, [controls]);
+
+  // Attach scroll event listener
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    const footerSections = document.querySelectorAll<HTMLElement>(".section");
-    footerSections.forEach((section) => {
-      if (scrollPosition >= section.offsetTop - window.innerHeight * 0.8) {
-        controls.start({ x: 0, opacity: 1, transition: { duration: 1 } });
-      }
-    });
-  }, [scrollPosition, controls]);
+  }, [handleScroll]);
 
   return (
     <div className="flex gap-7 py-10 md:px-10 lg:px-32 justify-between items-center bg-slate-200">
       <div>
-        <motion.div
-          initial={{ x: 100, opacity: 0 }}
-          animate={controls}
-          className="relative section hidden md:block lg:block"
-        >
+        <div className="relative section hidden md:block lg:block">
           <Image
             classes="md:w-full lg:w-80"
             ImageURL={Portfolio1}
@@ -48,20 +52,13 @@ const Portfolio = () => {
             ImageURL={Portfolio2}
             altText="Portfolio img"
           />
-        </motion.div>
+        </div>
       </div>
       <motion.div
-        // id="animatediv"
-        // initial={{ opacity: 0, x: 100 }}
-        // animate={controls}
-        // transition={{
-        //   duration: 1,
-        //   ease: "easeOut",
-        //   delayChildren: 2,
-        //   staggerChildren: 0.8,
-        // }}
-        initial={{ x: 100, opacity: 0 }}
+        ref={sectionRef}
+        initial={{ x: "0", opacity: 0 }}
         animate={controls}
+        transition={{ duration: 1 }}
         className="flex section flex-col justify-center items-center md:items-end  space-y-8"
       >
         <HeadingTwo

@@ -1,45 +1,49 @@
 import { Paragraph } from "../../components";
 import { motion, useAnimation } from "framer-motion";
 // import AnimateDiv from "../../components/AnimateDiv";
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 const themeContent = `Create stunning, professional designs effortlessly using our AIdriven
         tools. Let the AI handle the heavy lifting, so you can focus on your
         vision`;
 const Theme = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const sectionPosition = sectionRef.current?.offsetTop || 0;
+    const sectionHeight = sectionRef.current?.offsetHeight || 0;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const section = document.getElementById("animatediv");
-      if (section) {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const windowHeight = window.innerHeight;
-        if (scrollPosition > sectionTop - windowHeight + sectionHeight / 2) {
-          controls.start({ opacity: 1, x: 0 });
-        } else {
-          controls.start({ opacity: 0, x: -100 });
-        }
-      }
-    };
+    // Calculate the progress of scroll reveal animation
+    let progress = 0;
+    if (scrollPosition > sectionPosition) {
+      progress = (scrollPosition - sectionPosition) / sectionHeight;
+    }
 
-    window.addEventListener("scroll", handleScroll);
+    // Ensure animation stays within bounds
+    const yValue = Math.min(0, -100 + 100 * progress);
+    const opacityValue = Math.min(1, progress);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    // Apply animation based on scroll progress
+    controls.start({
+      x: `${yValue}%`, // Move from -100% to 0% as progress increases
+      opacity: opacityValue, // Fade in as the section scrolls into view
+    });
   }, [controls]);
+
+  // Attach scroll event listener
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
 
   return (
     <motion.div
-      id="animatediv"
-      initial={{ opacity: 0, x: -100 }}
+      initial={{ x: 0, opacity: 0 }}
       animate={controls}
-      transition={{
-        duration: 1,
-        ease: "easeOut",
-        delayChildren: 2,
-        staggerChildren: 0.8,
-      }}
+      transition={{ duration: 0.8 }}
+      ref={sectionRef}
       className="text-center my-10 md:my-20"
     >
       <h1 className="text-3xl md:text-6xl font-semibold text-slate-900">

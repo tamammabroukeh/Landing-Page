@@ -1,32 +1,39 @@
 import { FooterContent } from "../../data/data";
 import { CustomLink, Paragraph, HeadingTwo } from "../../components";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 const Footer = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const sectionPosition = sectionRef.current?.offsetTop || 0;
+    const sectionHeight = sectionRef.current?.offsetHeight || 0;
 
-  const handleScroll = () => {
-    const position = window.scrollY;
-    setScrollPosition(position);
-  };
+    // Calculate the progress of scroll reveal animation
+    let progress = 0;
+    if (scrollPosition > sectionPosition) {
+      progress = (scrollPosition - sectionPosition) / sectionHeight;
+    }
 
+    // Ensure animation stays within bounds
+    const yValue = Math.min(0, -100 + 100 * progress);
+    const opacityValue = Math.min(1, progress);
+
+    // Apply animation based on scroll progress
+    controls.start({
+      x: `${yValue}%`, // Move from -100% to 0% as progress increases
+      opacity: opacityValue, // Fade in as the section scrolls into view
+    });
+  }, [controls]);
+
+  // Attach scroll event listener
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    const footerSections =
-      document.querySelectorAll<HTMLElement>(".footer-section");
-    footerSections.forEach((section) => {
-      if (scrollPosition >= section.offsetTop - window.innerHeight * 0.8) {
-        controls.start({ x: 0, opacity: 1, transition: { duration: 1 } });
-      }
-    });
-  }, [scrollPosition, controls]);
+  }, [handleScroll]);
 
   return (
     <div className="bg-neutral-900">
@@ -43,13 +50,16 @@ const Footer = () => {
           />
         </div>
         <div className="h-[1px] bg-slate-600" />
-        <div className="flex justify-between flex-wrap mx-2 text-slate-300">
+        <div
+          ref={sectionRef}
+          className="flex justify-between flex-wrap mx-2 text-slate-300"
+        >
           {FooterContent.map((item) => {
             return (
               <motion.div
-                className="footer-section"
-                initial={{ x: -100, opacity: 0 }}
+                initial={{ x: 0, opacity: 0 }}
                 animate={controls}
+                transition={{ duration: 1 }}
                 key={item.id}
               >
                 <HeadingTwo classes="" title={item.parent} />

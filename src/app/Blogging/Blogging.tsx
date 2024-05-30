@@ -11,31 +11,38 @@ import BloggingImg from "../../../public/assets/Blogging.jpg";
 import { BloggingContent } from "../../data/data";
 import { CustomLink, HeadingTwo, Image, Paragraph } from "../../components";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 const Blogging = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const sectionPosition = sectionRef.current?.offsetTop || 0;
+    const sectionHeight = sectionRef.current?.offsetHeight || 0;
 
-  const handleScroll = () => {
-    const position = window.scrollY;
-    setScrollPosition(position);
-  };
+    // Calculate the progress of scroll reveal animation
+    let progress = 0;
+    if (scrollPosition > sectionPosition) {
+      progress = (scrollPosition - sectionPosition) / sectionHeight;
+    }
 
+    // Ensure animation stays within bounds
+    const yValue = Math.min(0, -100 + 100 * progress);
+    const opacityValue = Math.min(1, progress);
+
+    // Apply animation based on scroll progress
+    controls.start({
+      x: `${yValue}%`, // Move from -100% to 0% as progress increases
+      opacity: opacityValue, // Fade in as the section scrolls into view
+    });
+  }, [controls]);
+  //Attach scroll event listener
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    const footerSections = document.querySelectorAll<HTMLElement>(".section");
-    footerSections.forEach((section) => {
-      if (scrollPosition >= section.offsetTop - window.innerHeight * 0.8) {
-        controls.start({ x: 0, opacity: 1, transition: { duration: 1 } });
-      }
-    });
-  }, [scrollPosition, controls]);
+  }, [handleScroll]);
 
   // function to render a blogs
   const renderBlogs = () => {
@@ -71,7 +78,7 @@ const Blogging = () => {
     });
   };
   return (
-    <div className="bg-slate-100">
+    <div ref={sectionRef} className="bg-slate-100 relative">
       <div className="max-w-7xl my-5 md:my-10 lg:my-14 mx-auto">
         <HeadingTwo classes="text-center text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug text-gray-800">
           Advanced Blogging <br />
@@ -81,8 +88,9 @@ const Blogging = () => {
           {/* <div className="section">{renderBlogs()}</div> */}
           <motion.div
             className="section"
+            initial={{ x: "0", opacity: 0 }}
             animate={controls}
-            initial={{ x: 100, opacity: 0 }}
+            transition={{ duration: 1 }}
           >
             {renderBlogs()}
           </motion.div>

@@ -4,38 +4,49 @@ const content = `Save time with AI-generated content that’s tailored to your a
           From blog posts to product descriptions, let AI do the writing for
           you.`;
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const GenerateContentSection = () => {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const sectionPosition = sectionRef.current?.offsetTop || 0;
+    const sectionHeight = sectionRef.current?.offsetHeight || 0;
 
-  const handleScroll = () => {
-    const position = window.scrollY;
-    setScrollPosition(position);
-  };
+    // Calculate the progress of scroll reveal animation
+    let progress = 0;
+    if (scrollPosition > sectionPosition) {
+      progress = (scrollPosition - sectionPosition) / sectionHeight;
+    }
 
+    // Ensure animation stays within bounds
+    const xValue = Math.min(0, -100 + 100 * progress);
+    const opacityValue = Math.min(1, progress);
+
+    // Apply animation based on scroll progress
+    controls.start({
+      x: `${xValue}%`, // Move from -100% to 0% as progress increases
+      opacity: opacityValue, // Fade in as the section scrolls into view
+    });
+  }, [controls]);
+  //Attach scroll event listener
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    const footerSections = document.querySelectorAll<HTMLElement>(".section");
-    footerSections.forEach((section) => {
-      if (scrollPosition >= section.offsetTop - window.innerHeight * 0.8) {
-        controls.start({ x: 0, opacity: 1, transition: { duration: 1 } });
-      }
-    });
-  }, [scrollPosition, controls]);
+  }, [handleScroll]);
 
   return (
-    <div className="flex flex-wrap md:flex-nowrap bg-slate-200">
+    <div
+      ref={sectionRef}
+      className="flex flex-wrap md:flex-nowrap bg-slate-200"
+    >
       <motion.div
-        initial={{ x: 100, opacity: 0 }}
+        initial={{ x: 0, opacity: 0 }}
         animate={controls}
+        transition={{ duration: 0.8 }}
         className="my-20 section text-center md:text-start w-full md:ml-10 lg:mx-24 space-y-8 transition-"
       >
         <HeadingTwo
@@ -51,13 +62,13 @@ const GenerateContentSection = () => {
           />
         </div>
       </motion.div>
-      <motion.div initial={{ x: -100, opacity: 0 }} animate={controls}>
+      <div>
         <Image
           classes="w-full section h-full"
           ImageURL={GenerateImg}
           altText="Generate img"
         />
-      </motion.div>
+      </div>
     </div>
   );
 };

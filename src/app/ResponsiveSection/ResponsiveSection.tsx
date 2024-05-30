@@ -4,54 +4,39 @@ import { HeadingTwo, Image, Paragraph } from "../../components";
 const description = `Ensure your website looks amazing on any device. Our AI optimizes
             layouts to be fully responsive and mobile-friendly`;
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 const ResponsiveSection = () => {
-  // const controls = useAnimation();
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     const scrollPosition = window.scrollY;
-  //     const section = document.getElementById("animatediv");
-  //     if (section) {
-  //       const sectionTop = section.offsetTop;
-  //       const sectionHeight = section.offsetHeight;
-  //       const windowHeight = window.innerHeight;
-  //       if (scrollPosition > sectionTop - windowHeight + sectionHeight / 2) {
-  //         controls.start({ opacity: 1, x: 0 });
-  //       } else {
-  //         controls.start({ opacity: 0, x: -100 });
-  //       }
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, [controls]);
-
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
+  const handleScroll = useCallback(() => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const sectionPosition = sectionRef.current?.offsetTop || 0;
+    const sectionHeight = sectionRef.current?.offsetHeight || 0;
 
-  const handleScroll = () => {
-    const position = window.scrollY;
-    setScrollPosition(position);
-  };
+    // Calculate the progress of scroll reveal animation
+    let progress = 0;
+    if (scrollPosition > sectionPosition) {
+      progress = (scrollPosition - sectionPosition) / sectionHeight;
+    }
 
+    // Ensure animation stays within bounds
+    const yValue = Math.min(0, -100 + 100 * progress);
+    const opacityValue = Math.min(1, progress);
+
+    // Apply animation based on scroll progress
+    controls.start({
+      x: `${yValue}%`, // Move from -100% to 0% as progress increases
+      opacity: opacityValue, // Fade in as the section scrolls into view
+    });
+  }, [controls]);
+
+  // Attach scroll event listener
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    const footerSections = document.querySelectorAll<HTMLElement>(".section");
-    footerSections.forEach((section) => {
-      if (scrollPosition >= section.offsetTop - window.innerHeight * 0.8) {
-        controls.start({ x: 0, opacity: 1, transition: { duration: 1 } });
-      }
-    });
-  }, [scrollPosition, controls]);
+  }, [handleScroll]);
   const renderHeading = (arr: string[]) => {
     return arr.map((item, index) => (
       <HeadingTwo
@@ -64,8 +49,10 @@ const ResponsiveSection = () => {
   return (
     <div className="bg-teal-700/70 text-white text-center">
       <motion.div
-        initial={{ x: 100, opacity: 0 }}
+        initial={{ x: 0, opacity: 0 }}
         animate={controls}
+        transition={{ duration: 1 }}
+        ref={sectionRef}
         className="my-10 section relative text-center space-y-10"
       >
         <div className="space-y-5">
